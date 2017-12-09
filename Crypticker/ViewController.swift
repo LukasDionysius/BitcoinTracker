@@ -1,31 +1,18 @@
-/**
- * Copyright (c) 2017 Razeware LLC
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 import UIKit
 import CryptoCurrencyKit
+import Alamofire
 
 class ViewController: CurrencyDataViewController {
   
-  let dateFormatter: DateFormatter
+    // Labels
+    @IBOutlet weak var highLabel: UILabel!
+    @IBOutlet weak var lowLabel: UILabel!
+    @IBOutlet weak var dayChangeLabel: UILabel!
+    
+    
+    
+    
+    let dateFormatter: DateFormatter
   
   required init?(coder aDecoder: NSCoder) {
     dateFormatter = DateFormatter()
@@ -34,6 +21,8 @@ class ViewController: CurrencyDataViewController {
     super.init(coder: aDecoder)
   }
   
+  ///
+  ///
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -42,6 +31,59 @@ class ViewController: CurrencyDataViewController {
     
     priceOnDayLabel.text = ""
     dayLabel.text = ""
+    
+    
+    ///////
+    // Currency formatter
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    
+    // Percentage formatter
+    let percFormatter = NumberFormatter()
+    percFormatter.minimumFractionDigits = 0
+    percFormatter.maximumFractionDigits = 2
+    
+    // Labels
+    highLabel.text = "..."
+    lowLabel.text = "..."
+    dayChangeLabel.text = "..."
+    
+    // Calling API using Alamofire and putting it in dictionaries
+    Alamofire.request("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD").responseJSON { response in
+        print(response)
+        
+        if let bitcoinJSON = response.result.value {
+            let bitcoinObject:Dictionary = bitcoinJSON as! Dictionary<String, Any>
+            
+            // Parse through information
+            let rawObject:Dictionary = bitcoinObject["RAW"] as! Dictionary<String, Any>
+            let usdObject:Dictionary = rawObject["BTC"] as! Dictionary<String, Any>
+            let btcObject:Dictionary = usdObject["USD"] as! Dictionary<String, Any>
+            
+            // Current price
+            let rate:NSNumber = btcObject["PRICE"] as! NSNumber
+            let rateCurrency = (formatter.string(from: rate)!)
+            // Day change
+            let dayChange:NSNumber = btcObject["CHANGE24HOUR"] as! NSNumber
+            let dayChangeCurrency = (formatter.string(from: dayChange)!)
+            // Day change percentage
+            let dayChangePerc:NSNumber = btcObject["CHANGEPCT24HOUR"] as! NSNumber
+            let dayChangePercPercentage = (percFormatter.string(from: dayChangePerc)!)
+            // High day price
+            let highDay:NSNumber = btcObject["HIGH24HOUR"] as! NSNumber
+            let highDayCurrency = (formatter.string(from: highDay)!)
+            // Low day price
+            let lowDay:NSNumber = btcObject["LOW24HOUR"] as! NSNumber
+            let lowDayCurrency =  (formatter.string(from: lowDay)!)
+            
+            // Changing UI
+            self.priceLabel.text = "\(rateCurrency)" // Current price
+            self.dayChangeLabel.text = "\(dayChangeCurrency)  (\(dayChangePercPercentage)%)"
+            self.highLabel.text = "\(highDayCurrency)"
+            self.lowLabel.text = "\(lowDayCurrency)"
+        }
+    }
+    //////////
   }
   
   override func viewWillAppear(_ animated: Bool)  {
