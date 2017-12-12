@@ -8,6 +8,7 @@ class ViewController: CurrencyDataViewController {
     @IBOutlet weak var highLabel: UILabel!
     @IBOutlet weak var lowLabel: UILabel!
     @IBOutlet weak var dayChangeLabel: UILabel!
+    @IBOutlet weak var dayChangeLabelNegative: UILabel!
     
     // Refresh Button Method
     @IBAction func refreshBtn(_ sender: Any) {
