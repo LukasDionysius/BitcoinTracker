@@ -161,6 +161,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Bitcoin Symbol" width="256" height="256"/>
+        <image name="Bitcoin Symbol" width="90" height="90"/>
     </resources>
 </document>
