@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Crypticker.xcodeproj">
+      location = "group:/Users/lukasmichaels/Documents/BitcoinTracker/BTCPriceTracker.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

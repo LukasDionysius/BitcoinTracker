@@ -297,7 +297,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = "Ray Wenderlich";
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					07DA61611965E33100E97CC3 = {
 						CreatedOnToolsVersion = 6.0;
@@ -311,7 +311,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 07DA615D1965E33100E97CC3 /* Build configuration list for PBXProject "Crypticker" */;
+			buildConfigurationList = 07DA615D1965E33100E97CC3 /* Build configuration list for PBXProject "BTCPriceTracker" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -684,7 +684,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		07DA615D1965E33100E97CC3 /* Build configuration list for PBXProject "Crypticker" */ = {
+		07DA615D1965E33100E97CC3 /* Build configuration list for PBXProject "BTCPriceTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				07DA617C1965E33100E97CC3 /* Debug */,
